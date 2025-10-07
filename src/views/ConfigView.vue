@@ -11,18 +11,18 @@ const inputs = reactive({
   phone: '',
   cref: '',
   address: '',
-  socialLinks: [''] as string[],
+  socialLinks: '',
 })
 
 onMounted(() => {
   const data = getConfig()
-  const { name = '', phone = '', cref = '', address = '', socialLinks = [''] } = data
+  const { name = '', phone = '', cref = '', address = '', socialLink = '' } = data || {}
 
   inputs.name = name
   inputs.phone = phone
   inputs.cref = cref
   inputs.address = address
-  inputs.socialLinks = socialLinks
+  inputs.socialLinks = socialLink
 })
 
 function saveData() {
@@ -31,9 +31,18 @@ function saveData() {
     phone: inputs.phone,
     cref: inputs.cref,
     address: inputs.address,
-    socialLinks: inputs.socialLinks,
+    socialLink: inputs.socialLinks,
   })
   toast.success('Configurações salvas com sucesso')
+}
+
+function clearData() {
+  inputs.name = ''
+  inputs.phone = ''
+  inputs.cref = ''
+  inputs.address = ''
+  inputs.socialLinks = ''
+  saveData()
 }
 </script>
 
@@ -84,39 +93,27 @@ function saveData() {
         />
       </label>
 
-      <div class="flex flex-col gap-2">
-        <label v-for="(link, index) in inputs.socialLinks" :key="index">
-          <h2 class="lab">Link {{ index + 1 }}</h2>
-          <input
-            type="text"
-            placeholder="Digite seu link"
-            v-model="inputs.socialLinks[index]"
-            @keyup.enter="saveData"
-          />
-        </label>
-
-        <div class="grid grid-cols-2 gap-1">
-          <button
-            class="bg-green-500 hover:bg-green-600 rounded-xl cursor-pointer transition hover:text-white"
-            @click="inputs.socialLinks.push('')"
-          >
-            <NerdIcon icon-class="nf-fa-plus" /> Adicionar link
-          </button>
-          <button
-            class="bg-red-400 hover:bg-red-500 rounded-xl cursor-pointer transition hover:text-white"
-            @click="inputs.socialLinks.pop()"
-            :disabled="inputs.socialLinks.length === 1"
-          >
-            <NerdIcon icon-class="nf-fa-minus" /> Remover link
-          </button>
-        </div>
-      </div>
+      <label>
+        <h2 class="lab">Link Social</h2>
+        <input
+          type="text"
+          placeholder="Digite seus links sociais"
+          v-model="inputs.socialLinks"
+          @keyup.enter="saveData"
+        />
+      </label>
 
       <button
         class="flex items-center justify-center gap-2 bg-blue-400 text-white px-2 py-1 rounded-lg w-full transition hover:bg-blue-500 cursor-pointer"
         @click="saveData"
       >
         <NerdIcon icon-class="nf-md-zip_disk" /> Salvar
+      </button>
+      <button
+        class="flex items-center justify-center gap-2 bg-red-400 text-white px-2 py-1 rounded-lg w-full transition hover:bg-red-500 cursor-pointer"
+        @click="clearData"
+      >
+        <NerdIcon icon-class="nf-md-delete" /> Limpar dados
       </button>
     </div>
   </div>
