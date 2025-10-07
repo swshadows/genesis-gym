@@ -81,11 +81,6 @@ function addExerciseToDay() {
   inputs.sets = null
 }
 
-const getFaviconURL = (url: string) => {
-  const baseURL = new URL(url).origin
-  return `https://icons.duckduckgo.com/ip3/${baseURL.replace(/^https?:\/\//, '')}.ico`
-}
-
 const blobData = computed(() => {
   if (Object.values(exercises).every((exer) => exer.length === 0)) {
     return null
@@ -102,16 +97,13 @@ const blobData = computed(() => {
       html += '</table>'
     }
   })
-  const { name = '', phone = '', cref = '', address = '', socialLink = '' } = lsData || {}
-  const footerIsValid = name && phone && cref && address && socialLink
+  const { name = '', phone = '', cref = '', address = '' } = lsData || {}
+  const footerIsValid = name && phone && cref && address
   const footer = footerIsValid
     ? `
    <footer class="print-footer">
       <p>Instrutor ${name}, CREF ${cref}</p>
       <p>${phone} — ${address}</p>
-      <p style="display: flex; align-items: center; gap: 4px; justify-content: center">
-        <img style="height: 16px" src="${getFaviconURL(socialLink)}" /><a href="${socialLink}">${socialLink}</a>
-      </p>
     </footer>
   `
     : ''

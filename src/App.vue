@@ -9,12 +9,14 @@ const now = new Date()
 
 <template>
   <header class="h-12 flex items-center justify-between px-2 bg-black">
-    <RouterLink
-      v-if="route.path !== '/'"
-      to="/"
-      class="rounded-full bg-white border border-neutral-300 w-8 h-8 grid place-items-center hover:bg-black hover:text-white transition cursor-pointer"
-      ><NerdIcon icon-class="nf-md-home"
-    /></RouterLink>
+    <div class="flex gap-2">
+      <RouterLink
+        v-if="route.path !== '/'"
+        to="/"
+        class="rounded-full bg-white border border-neutral-300 w-8 h-8 grid place-items-center hover:bg-black hover:text-white transition cursor-pointer"
+        ><NerdIcon icon-class="nf-md-home"
+      /></RouterLink>
+    </div>
     <RouterLink
       class="flex ml-auto rounded-2xl bg-white border border-neutral-300 gap-2 items-center px-2 py-1 hover:bg-black hover:text-white transition cursor-pointer"
       to="/config"

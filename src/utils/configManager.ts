@@ -3,7 +3,6 @@ type ConfigData = {
   phone: string
   cref: string
   address: string
-  socialLink: string
 }
 
 const LS_KEY = 'genesis-gym-config'

@@ -11,18 +11,16 @@ const inputs = reactive({
   phone: '',
   cref: '',
   address: '',
-  socialLinks: '',
 })
 
 onMounted(() => {
   const data = getConfig()
-  const { name = '', phone = '', cref = '', address = '', socialLink = '' } = data || {}
+  const { name = '', phone = '', cref = '', address = '' } = data || {}
 
   inputs.name = name
   inputs.phone = phone
   inputs.cref = cref
   inputs.address = address
-  inputs.socialLinks = socialLink
 })
 
 function saveData() {
@@ -31,7 +29,6 @@ function saveData() {
     phone: inputs.phone,
     cref: inputs.cref,
     address: inputs.address,
-    socialLink: inputs.socialLinks,
   })
   toast.success('Configurações salvas com sucesso')
 }
@@ -41,7 +38,6 @@ function clearData() {
   inputs.phone = ''
   inputs.cref = ''
   inputs.address = ''
-  inputs.socialLinks = ''
   saveData()
 }
 </script>
@@ -89,16 +85,6 @@ function clearData() {
           type="text"
           placeholder="Digite seu endereço"
           v-model="inputs.address"
-          @keyup.enter="saveData"
-        />
-      </label>
-
-      <label>
-        <h2 class="lab">Link Social</h2>
-        <input
-          type="text"
-          placeholder="Digite seus links sociais"
-          v-model="inputs.socialLinks"
           @keyup.enter="saveData"
         />
       </label>
