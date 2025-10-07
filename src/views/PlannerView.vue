@@ -22,11 +22,11 @@ const exercises = reactive({
   sun: [] as Exercise[],
 })
 const days = {
-  mon: 'Segunda',
-  tue: 'Terça',
-  wed: 'Quarta',
-  thu: 'Quinta',
-  fri: 'Sexta',
+  mon: 'Segunda-feira',
+  tue: 'Terça-feira',
+  wed: 'Quarta-feira',
+  thu: 'Quinta-feira',
+  fri: 'Sexta-feira',
   sat: 'Sábado',
   sun: 'Domingo',
 }
@@ -92,88 +92,18 @@ const blobData = computed(() => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Überdaten</title>
       <style>
-          * {
-            box-sizing: border-box;
-          }
-          @font-face {
-            font-family: 'EmojiFont';
-            src: url('${window.location.origin}/TwemojiMozilla.ttf') format('truetype');
-          }
-          .font-emoji {
-            font-family: 'EmojiFont';
-          }
-          body {
-            font-family: 'UbuntuMono Nerd Font Mono', monospace;
-            font-size: 12pt;
-            line-height: 1.4;
-            color: #222;
-            margin: 20mm;
-          }
-          h1, h2, h3, h4 {
-            font-weight: 600;
-            margin: 0.5em 0;
-          }
-          h1 {
-            font-size: 18pt;
-            text-align: center;
-            color: #1a73e8; /* azul */
-          }
-          h2 {
-            font-size: 16pt;
-            color: #d93025; /* vermelho */
-          }
-          h3 {
-            font-size: 14pt;
-            color: #188038; /* verde */
-          }
-          h4 {
-            font-size: 13pt;
-            color: #e37400; /* laranja */
-          }
-          p, li {
-            margin: 0.3em 0;
-          }
-          ul, ol {
-            padding-left: 20px;
-          }
-          code {
-            background: #cbcbcb;
-            padding: 2px 4px;
-            border-radius: 6px;
-          }
-          table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1em 0;
-            page-break-inside: avoid; /* não quebrar tabela na impressão */
-          }
-          th, td {
-            border: 1px solid #ccc;
-            padding: 6px 10px;
-            text-align: left;
-            vertical-align: top;
-          }
-          th {
-            background: #f5f5f5;
-            font-weight: bold;
-          }
-          h1, h2 {
-            page-break-after: avoid;
-          }
-          tr {
-            page-break-inside: avoid;
-          }
-          .t-no-wrap{
-            white-space: nowrap;
-          }
+          * { box-sizing: border-box; }
+          body { font-family: 'UbuntuMono Nerd Font Mono', monospace; font-size: 12pt; line-height: 1.4; color: #222; margin: 20mm; }
+          h1 { font-size: 18pt; text-align: center; font-weight: 600; margin: 0.5em 0; color: #249fd9; }
+          table { width: 100%; border-collapse: collapse; margin: 1em 0; page-break-inside: avoid; }
+          th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; vertical-align: top; }
+          th { background: #f5f5f5; font-weight: bold; }
+          h1, h2 { page-break-after: avoid; }
+          tr { page-break-inside: avoid; }
+
           @media print {
-            body {
-              margin: 10mm;
-            }
-            a {
-              color: black;
-              text-decoration: underline;
-            }
+            body { margin: 10mm; }
+            a { color: black; text-decoration: underline; }
           }
         }
       </style>
@@ -215,8 +145,14 @@ function blobExport() {
           <div
             v-for="(exer, index) in exercises[key]"
             :key="index"
-            class="flex flex-col gap-2 border border-neutral-300 rounded-md"
+            class="relative flex flex-col gap-2 border border-neutral-300 rounded-md p-2"
           >
+            <button
+              @click="exercises[key].splice(index, 1)"
+              class="absolute top-2 right-2 rounded-full w-5 h-5 text-white bg-red-400 hover:bg-red-500 transition cursor-pointer grid place-items-center"
+            >
+              <NerdIcon icon-class="nf-fa-xmark" style="font-size: 0.5rem" />
+            </button>
             <label class="flex flex-col items-center">
               <span class="font-bold text-neutral-600">Nome</span>
               <input type="text" v-model="exer.name" class="w-full" />
@@ -259,6 +195,7 @@ function blobExport() {
         class="w-full bg-white"
         placeholder="Digite o nome do exercício"
         v-model="inputs.name"
+        @keyup.enter="addExerciseToDay"
       />
     </label>
 
@@ -270,6 +207,7 @@ function blobExport() {
           class="w-full bg-white"
           placeholder="Digite a quantidade de séries"
           v-model="inputs.sets"
+          @keyup.enter="addExerciseToDay"
         />
       </label>
       <label class="flex flex-col gap-2 items-center">
@@ -279,6 +217,7 @@ function blobExport() {
           class="w-full bg-white"
           placeholder="Digite a quantidade de repetições"
           v-model="inputs.reps"
+          @keyup.enter="addExerciseToDay"
         />
       </label>
     </div>
