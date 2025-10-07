@@ -1,0 +1,45 @@
+@import 'https://www.nerdfonts.com/assets/css/webfont.css';
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+@import 'tailwindcss';
+
+* {
+  font-family: 'Lato', sans-serif;
+}
+
+#app {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #00000055;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #fdfdfd;
+  border-radius: 5px;
+  border: 1px solid #757575;
+}
+
+*:disabled {
+  cursor: not-allowed !important;
+  background-color: #b4b4b4 !important;
+  color: #545454 !important;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  @apply accent-blue-400;
+}
+input,
+textarea,
+select {
+  @apply outline-0 border border-gray-300 focus:border-blue-300 px-2 py-1;
+}
